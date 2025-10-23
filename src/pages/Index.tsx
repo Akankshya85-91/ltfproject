@@ -56,15 +56,7 @@ export default function Index() {
 
             
 
-            <div className="flex flex-wrap gap-4 justify-center">
-              {user ? <Button size="lg" className="text-lg px-8 h-14 rounded-xl shadow-lg hover:shadow-xl transition-all" onClick={() => navigate('/translate')}>
-                  Start Translating
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button> : <Button size="lg" className="text-lg px-8 h-14 rounded-xl shadow-lg hover:shadow-xl transition-all" onClick={() => navigate('/auth')}>
-                  Get Started Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>}
-            </div>
+            
           </div>
         </div>
       </section>

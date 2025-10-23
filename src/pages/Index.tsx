@@ -54,10 +54,7 @@ export default function Index() {
               <span className="text-foreground">Barriers Instantly</span>
             </h1>
 
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Translate text, images, speech, and videos across 50+ languages with powerful AI technology. 
-              Free, fast, and incredibly accurate.
-            </p>
+            
 
             <div className="flex flex-wrap gap-4 justify-center">
               {user ? <Button size="lg" className="text-lg px-8 h-14 rounded-xl shadow-lg hover:shadow-xl transition-all" onClick={() => navigate('/translate')}>

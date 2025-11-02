@@ -8,14 +8,16 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { LANGUAGES } from '@/utils/languages';
 import { translateText, speakText, startSpeechRecognition, stopSpeech } from '@/utils/translationService';
 import { checkGrammar, applyCorrection, GrammarError } from '@/utils/grammarService';
-import { Copy, Volume2, Mic, Loader2, ArrowLeftRight, CheckCircle2, ArrowRightLeft, Trash2, Share2, Download } from 'lucide-react';
+import { Copy, Volume2, Mic, Loader2, ArrowLeftRight, CheckCircle2, ArrowRightLeft, Trash2, Share2, Download, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import textBg from '@/assets/text-bg.jpg';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
+import { useNavigate } from 'react-router-dom';
 
 export default function Translate() {
+  const navigate = useNavigate();
   const [sourceText, setSourceText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
   const [sourceLang, setSourceLang] = useState('en');
@@ -182,9 +184,17 @@ export default function Translate() {
           <AppSidebar />
           <div className="flex-1 flex flex-col" style={{ backgroundImage: `url(${textBg})`, backgroundSize: 'cover' }}>
             <div className="absolute inset-0 bg-background/95" />
-            <header className="h-16 flex items-center border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
+            <header className="h-16 flex items-center gap-2 border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
               <SidebarTrigger className="ml-4" />
-              <h1 className="text-2xl font-bold ml-4">Text Translation</h1>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate('/')}
+                className="ml-2"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <h1 className="text-2xl font-bold">Text Translation</h1>
             </header>
             <div className="container mx-auto px-4 py-12 relative z-10 animate-fade-in">
               <div className="max-w-6xl mx-auto space-y-6">

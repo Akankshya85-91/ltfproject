@@ -7,7 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { LANGUAGES } from '@/utils/languages';
 import { translateText } from '@/utils/translationService';
 import { extractTextFromImage } from '@/utils/ocrService';
-import { Upload, Loader2, Copy, Volume2, Image as ImageIcon, Trash2, AlertCircle } from 'lucide-react';
+import { Upload, Loader2, Copy, Volume2, Image as ImageIcon, Trash2, AlertCircle, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,7 +16,10 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { speakText, stopSpeech } from '@/utils/translationService';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useNavigate } from 'react-router-dom';
+
 export default function ImageTranslate() {
+  const navigate = useNavigate();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [extractedText, setExtractedText] = useState('');
@@ -149,9 +152,17 @@ export default function ImageTranslate() {
         backgroundSize: 'cover'
       }}>
           <div className="absolute inset-0 bg-background/95" />
-          <header className="h-16 flex items-center border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
+          <header className="h-16 flex items-center gap-2 border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
             <SidebarTrigger className="ml-4" />
-            <h1 className="text-2xl font-bold ml-4">Image Translation</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/')}
+              className="ml-2"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-2xl font-bold">Image Translation</h1>
           </header>
           <div className="container mx-auto px-4 py-12 relative z-10 animate-fade-in">
             <div className="max-w-6xl mx-auto space-y-6">

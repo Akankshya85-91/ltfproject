@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Trash2 } from 'lucide-react';
+import { Loader2, Trash2, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 export default function History() {
+  const navigate = useNavigate();
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,9 +53,17 @@ export default function History() {
       <div className="min-h-screen flex w-full">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
-          <header className="h-16 flex items-center border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
+          <header className="h-16 flex items-center gap-2 border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
             <SidebarTrigger className="ml-4" />
-            <h1 className="text-2xl font-bold ml-4">Translation History</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/')}
+              className="ml-2"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-2xl font-bold">Translation History</h1>
             {history.length > 0 && (
               <Button onClick={clearHistory} variant="destructive" className="ml-auto mr-4">
                 <Trash2 className="h-4 w-4 mr-2" />

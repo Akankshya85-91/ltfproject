@@ -1,54 +1,44 @@
 import { FileText, Image, Video, History, User, LogOut, Languages } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
-  useSidebar,
-} from '@/components/ui/sidebar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar } from '@/components/ui/sidebar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
-
-const navigationItems = [
-  { title: 'Text Translation', url: '/translate', icon: FileText },
-  { title: 'Image Translation', url: '/image-translate', icon: Image },
-  { title: 'Video Translation', url: '/video-translate', icon: Video },
-  { title: 'History', url: '/history', icon: History },
-];
-
+const navigationItems = [{
+  title: 'Text Translation',
+  url: '/translate',
+  icon: FileText
+}, {
+  title: 'Image Translation',
+  url: '/image-translate',
+  icon: Image
+}, {
+  title: 'Video Translation',
+  url: '/video-translate',
+  icon: Video
+}, {
+  title: 'History',
+  url: '/history',
+  icon: History
+}];
 export function AppSidebar() {
-  const { user, signOut } = useAuth();
+  const {
+    user,
+    signOut
+  } = useAuth();
   const navigate = useNavigate();
-  const { state } = useSidebar();
+  const {
+    state
+  } = useSidebar();
   const collapsed = state === "collapsed";
-
-  return (
-    <Sidebar className={collapsed ? "w-16" : "w-64"}>
+  return <Sidebar className={collapsed ? "w-16" : "w-64"}>
       <SidebarHeader className="border-b border-border p-4">
         <div className="flex items-center gap-2">
           <div className="p-2 rounded-xl bg-gradient-to-br from-primary to-accent">
             <Languages className="h-5 w-5 text-white" />
           </div>
-          {!collapsed && (
-            <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Intelligent Multilingual Translator
-            </span>
-          )}
+          {!collapsed}
         </div>
       </SidebarHeader>
 
@@ -57,21 +47,16 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {navigationItems.map(item => <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      className={({ isActive }) =>
-                        `flex items-center gap-3 ${isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`
-                      }
-                    >
+                    <NavLink to={item.url} className={({
+                  isActive
+                }) => `flex items-center gap-3 ${isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`}>
                       <item.icon className="h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                </SidebarMenuItem>)}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -80,8 +65,7 @@ export function AppSidebar() {
       <SidebarFooter className="border-t border-border p-4">
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          {user && (
-            <DropdownMenu>
+          {user && <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="rounded-full">
                   <User className="h-5 w-5" />
@@ -98,15 +82,11 @@ export function AppSidebar() {
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-          {!user && !collapsed && (
-            <Button onClick={() => navigate('/auth')} size="sm" className="w-full">
+            </DropdownMenu>}
+          {!user && !collapsed && <Button onClick={() => navigate('/auth')} size="sm" className="w-full">
               Get Started
-            </Button>
-          )}
+            </Button>}
         </div>
       </SidebarFooter>
-    </Sidebar>
-  );
+    </Sidebar>;
 }

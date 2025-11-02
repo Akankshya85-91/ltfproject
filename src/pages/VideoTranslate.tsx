@@ -5,18 +5,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card } from '@/components/ui/card';
 import { LANGUAGES } from '@/utils/languages';
 import { translateText } from '@/utils/translationService';
-import { Upload, Loader2, Copy, Video, Trash2, Volume2, AlertCircle, Sparkles } from 'lucide-react';
+import { Upload, Loader2, Copy, Video, Trash2, Volume2, AlertCircle, Sparkles, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '@/integrations/supabase/client';
-import textBg from '@/assets/text-bg.jpg';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { speakText, stopSpeech } from '@/utils/translationService';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { transcribeVideoAudio } from '@/utils/audioTranscriptionService';
+import { useNavigate } from 'react-router-dom';
+
 export default function VideoTranslate() {
+  const navigate = useNavigate();
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [subtitles, setSubtitles] = useState('');
@@ -198,14 +200,18 @@ export default function VideoTranslate() {
   return <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <div className="flex-1 flex flex-col" style={{
-        backgroundImage: `url(${textBg})`,
-        backgroundSize: 'cover'
-      }}>
-          <div className="absolute inset-0 bg-background/95" />
-          <header className="h-16 flex items-center border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
+        <div className="flex-1 flex flex-col bg-background">
+          <header className="h-16 flex items-center gap-2 border-b border-border sticky top-0 bg-background/80 backdrop-blur-lg z-50">
             <SidebarTrigger className="ml-4" />
-            <h1 className="text-2xl font-bold ml-4">Video Translation</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/')}
+              className="ml-2"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-2xl font-bold">Video Translation</h1>
           </header>
           <div className="container mx-auto px-4 py-12 relative z-10 animate-fade-in">
             <div className="max-w-6xl mx-auto space-y-6">

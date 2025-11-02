@@ -84,44 +84,12 @@ export default function Index() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4 bg-secondary/30">
-        <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <Globe className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h2 className="text-4xl font-bold mb-4">
-                Why Choose LinguaConnect?
-              </h2>
-              <p className="text-xl text-muted-foreground">
-                The most comprehensive translation platform
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {benefits.map((benefit, index) => <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-background border border-border hover:border-primary/50 transition-all">
-                  <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                  <span className="text-lg">{benefit}</span>
-                </div>)}
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl bg-gradient-to-br from-primary to-accent text-white shadow-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Connect with the World?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Join thousands of users breaking language barriers every day
-            </p>
-            {!user && <Button size="lg" variant="secondary" className="text-lg px-8 h-14 rounded-xl" onClick={() => navigate('/auth')}>
-                Start Translating Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>}
-          </div>
+          
         </div>
       </section>
 

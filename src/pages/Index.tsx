@@ -77,7 +77,6 @@ export default function Index() {
                   <feature.icon className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground text-justify">{feature.description}</p>
               </div>)}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { FileText, Image, Video, History, User, LogOut, Languages } from 'lucide-react';
+import { FileText, Image, Video, History, User, LogOut, Languages, BookOpen } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar } from '@/components/ui/sidebar';
@@ -17,6 +17,10 @@ const navigationItems = [{
   title: 'Video Translation',
   url: '/video-translate',
   icon: Video
+}, {
+  title: 'Dictionary',
+  url: '/dictionary',
+  icon: BookOpen
 }, {
   title: 'History',
   url: '/history',

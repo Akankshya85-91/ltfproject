@@ -10,6 +10,7 @@ import Translate from "./pages/Translate";
 import ImageTranslate from "./pages/ImageTranslate";
 import VideoTranslate from "./pages/VideoTranslate";
 import History from "./pages/History";
+import Dictionary from "./pages/Dictionary";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/translate" element={<ProtectedRoute><Translate /></ProtectedRoute>} />
             <Route path="/image-translate" element={<ProtectedRoute><ImageTranslate /></ProtectedRoute>} />
             <Route path="/video-translate" element={<ProtectedRoute><VideoTranslate /></ProtectedRoute>} />
+            <Route path="/dictionary" element={<ProtectedRoute><Dictionary /></ProtectedRoute>} />
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>

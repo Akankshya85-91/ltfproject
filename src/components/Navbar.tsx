@@ -19,7 +19,8 @@ export const Navbar = () => {
             <div className="p-2 rounded-xl bg-gradient-to-br from-primary to-accent">
               <Languages className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Intelligent Multilingual Translator</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">IMT
+          </span>
           </Link>
 
           <div className="flex items-center gap-2">

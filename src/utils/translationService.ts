@@ -1,5 +1,167 @@
-// Free MyMemory Translation API
-const MYMEMORY_API = 'https://api.mymemory.translated.net/get';
+// Manual translation dictionary for common words and phrases
+const translationDictionary: Record<string, Record<string, string>> = {
+  // English to Spanish
+  'en-es': {
+    'hello': 'hola',
+    'goodbye': 'adiós',
+    'thank you': 'gracias',
+    'please': 'por favor',
+    'yes': 'sí',
+    'no': 'no',
+    'good morning': 'buenos días',
+    'good night': 'buenas noches',
+    'how are you': 'cómo estás',
+    'i love you': 'te amo',
+    'welcome': 'bienvenido',
+    'friend': 'amigo',
+    'family': 'familia',
+    'water': 'agua',
+    'food': 'comida',
+    'book': 'libro',
+    'house': 'casa',
+    'car': 'coche',
+    'time': 'tiempo',
+    'day': 'día',
+    'night': 'noche',
+    'week': 'semana',
+    'month': 'mes',
+    'year': 'año'
+  },
+  // Spanish to English
+  'es-en': {
+    'hola': 'hello',
+    'adiós': 'goodbye',
+    'gracias': 'thank you',
+    'por favor': 'please',
+    'sí': 'yes',
+    'no': 'no',
+    'buenos días': 'good morning',
+    'buenas noches': 'good night',
+    'cómo estás': 'how are you',
+    'te amo': 'i love you',
+    'bienvenido': 'welcome',
+    'amigo': 'friend',
+    'familia': 'family',
+    'agua': 'water',
+    'comida': 'food',
+    'libro': 'book',
+    'casa': 'house',
+    'coche': 'car',
+    'tiempo': 'time',
+    'día': 'day',
+    'noche': 'night',
+    'semana': 'week',
+    'mes': 'month',
+    'año': 'year'
+  },
+  // English to French
+  'en-fr': {
+    'hello': 'bonjour',
+    'goodbye': 'au revoir',
+    'thank you': 'merci',
+    'please': 's\'il vous plaît',
+    'yes': 'oui',
+    'no': 'non',
+    'good morning': 'bonjour',
+    'good night': 'bonne nuit',
+    'how are you': 'comment allez-vous',
+    'i love you': 'je t\'aime',
+    'welcome': 'bienvenue',
+    'friend': 'ami',
+    'family': 'famille',
+    'water': 'eau',
+    'food': 'nourriture',
+    'book': 'livre',
+    'house': 'maison',
+    'car': 'voiture',
+    'time': 'temps',
+    'day': 'jour',
+    'night': 'nuit',
+    'week': 'semaine',
+    'month': 'mois',
+    'year': 'année'
+  },
+  // French to English
+  'fr-en': {
+    'bonjour': 'hello',
+    'au revoir': 'goodbye',
+    'merci': 'thank you',
+    's\'il vous plaît': 'please',
+    'oui': 'yes',
+    'non': 'no',
+    'bonne nuit': 'good night',
+    'comment allez-vous': 'how are you',
+    'je t\'aime': 'i love you',
+    'bienvenue': 'welcome',
+    'ami': 'friend',
+    'famille': 'family',
+    'eau': 'water',
+    'nourriture': 'food',
+    'livre': 'book',
+    'maison': 'house',
+    'voiture': 'car',
+    'temps': 'time',
+    'jour': 'day',
+    'nuit': 'night',
+    'semaine': 'week',
+    'mois': 'month',
+    'année': 'year'
+  },
+  // English to German
+  'en-de': {
+    'hello': 'hallo',
+    'goodbye': 'auf wiedersehen',
+    'thank you': 'danke',
+    'please': 'bitte',
+    'yes': 'ja',
+    'no': 'nein',
+    'good morning': 'guten morgen',
+    'good night': 'gute nacht',
+    'how are you': 'wie geht es dir',
+    'i love you': 'ich liebe dich',
+    'welcome': 'willkommen',
+    'friend': 'freund',
+    'family': 'familie',
+    'water': 'wasser',
+    'food': 'essen',
+    'book': 'buch',
+    'house': 'haus',
+    'car': 'auto',
+    'time': 'zeit',
+    'day': 'tag',
+    'night': 'nacht',
+    'week': 'woche',
+    'month': 'monat',
+    'year': 'jahr'
+  },
+  // German to English
+  'de-en': {
+    'hallo': 'hello',
+    'auf wiedersehen': 'goodbye',
+    'danke': 'thank you',
+    'bitte': 'please',
+    'ja': 'yes',
+    'nein': 'no',
+    'guten morgen': 'good morning',
+    'gute nacht': 'good night',
+    'wie geht es dir': 'how are you',
+    'ich liebe dich': 'i love you',
+    'willkommen': 'welcome',
+    'freund': 'friend',
+    'familie': 'family',
+    'wasser': 'water',
+    'essen': 'food',
+    'buch': 'book',
+    'haus': 'house',
+    'auto': 'car',
+    'zeit': 'time',
+    'tag': 'day',
+    'nacht': 'night',
+    'woche': 'week',
+    'monat': 'month',
+    'jahr': 'year'
+  }
+};
 
 export async function translateText(
   text: string,
@@ -7,87 +169,72 @@ export async function translateText(
   targetLang: string
 ): Promise<string> {
   try {
-    // Split long text into chunks to avoid API limits (500 char limit)
-    const maxChunkSize = 500;
-    const chunks: string[] = [];
-    
-    if (text.length <= maxChunkSize) {
-      chunks.push(text);
-    } else {
-      // Split by sentences to maintain context
-      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-      let currentChunk = '';
-      
-      for (const sentence of sentences) {
-        if ((currentChunk + sentence).length <= maxChunkSize) {
-          currentChunk += sentence;
-        } else {
-          if (currentChunk) chunks.push(currentChunk.trim());
-          currentChunk = sentence;
-        }
-      }
-      if (currentChunk) chunks.push(currentChunk.trim());
+    const langPair = `${sourceLang}-${targetLang}`;
+    const dictionary = translationDictionary[langPair];
+
+    if (!dictionary) {
+      throw new Error(`Translation from ${sourceLang} to ${targetLang} is not supported`);
     }
+
+    const lowerText = text.toLowerCase().trim();
     
-    // Translate each chunk with delay to avoid rate limits
-    const translatedChunks: string[] = [];
-    
-    for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[i];
-      const langPair = `${sourceLang}|${targetLang}`;
-      
-      try {
-        const response = await fetch(
-          `${MYMEMORY_API}?q=${encodeURIComponent(chunk)}&langpair=${langPair}`
-        );
-        
-        if (!response.ok) {
-          console.error('Translation API error:', response.status, response.statusText);
-          throw new Error(`Translation request failed: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('API Response:', data);
-        
-        if (data.responseData?.translatedText) {
-          translatedChunks.push(data.responseData.translatedText);
-        } else if (data.responseStatus === 403) {
-          throw new Error('Translation API limit reached. Please try again later.');
-        } else {
-          console.error('Invalid API response:', data);
-          // Fallback: return original text if translation fails
-          translatedChunks.push(chunk);
-        }
-        
-        // Add small delay between requests to avoid rate limiting
-        if (i < chunks.length - 1) {
-          await new Promise(resolve => setTimeout(resolve, 300));
-        }
-      } catch (err) {
-        console.error('Translation chunk error:', err);
-        // Fallback: use original text for failed chunks
-        translatedChunks.push(chunk);
-      }
+    // Try exact match first
+    if (dictionary[lowerText]) {
+      return dictionary[lowerText];
     }
+
+    // Try word-by-word translation
+    const words = lowerText.split(/\s+/);
+    const translatedWords = words.map(word => {
+      const cleaned = word.replace(/[.,!?;:]$/, '');
+      const punctuation = word.match(/[.,!?;:]$/) ? word.slice(-1) : '';
+      return (dictionary[cleaned] || word) + punctuation;
+    });
+
+    const result = translatedWords.join(' ');
     
-    return translatedChunks.join(' ');
+    // If nothing was translated, throw error
+    if (result === lowerText) {
+      throw new Error('Translation not available for this text');
+    }
+
+    return result;
   } catch (error) {
     console.error('Translation error:', error);
-    throw new Error('Failed to translate text. Please try again.');
+    throw new Error(error instanceof Error ? error.message : 'Failed to translate text');
   }
 }
 
 export async function detectLanguage(text: string): Promise<string> {
   try {
-    const response = await fetch(
-      `${MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=en|es`
-    );
+    const lowerText = text.toLowerCase();
     
-    const data = await response.json();
+    // Simple language detection based on common words
+    const spanishWords = ['hola', 'gracias', 'por favor', 'buenos', 'adiós', 'sí', 'cómo', 'estás'];
+    const frenchWords = ['bonjour', 'merci', 'oui', 'non', 'comment', 'vous', 'bonne', 'nuit'];
+    const germanWords = ['hallo', 'danke', 'bitte', 'guten', 'morgen', 'wie', 'geht'];
     
-    // MyMemory doesn't provide language detection directly
-    // This is a simplified approach - in production, you'd use a dedicated API
-    return 'en';
+    let spanishCount = 0;
+    let frenchCount = 0;
+    let germanCount = 0;
+    
+    spanishWords.forEach(word => {
+      if (lowerText.includes(word)) spanishCount++;
+    });
+    
+    frenchWords.forEach(word => {
+      if (lowerText.includes(word)) frenchCount++;
+    });
+    
+    germanWords.forEach(word => {
+      if (lowerText.includes(word)) germanCount++;
+    });
+    
+    if (spanishCount > frenchCount && spanishCount > germanCount) return 'es';
+    if (frenchCount > spanishCount && frenchCount > germanCount) return 'fr';
+    if (germanCount > spanishCount && germanCount > frenchCount) return 'de';
+    
+    return 'en'; // Default to English
   } catch (error) {
     console.error('Language detection error:', error);
     return 'en';
